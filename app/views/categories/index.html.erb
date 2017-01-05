@@ -1,0 +1,33 @@
+<% provide :title, t(".title") %>
+<h1><%= t ".title" %></h1>
+<% if current_user.admin? %>
+  <%= form_for @category do |f| %>
+    <%= render "shared/error_messages", object: f.object %>
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "form-control" %>
+      <%= f.text_area :discription, placeholder: t("form.discription") %>
+    </div>
+    <%= f.submit t"create", class: "btn btn-primary" %>
+  <% end %>
+<% end %>
+<%= will_paginate %>
+<% @categories.each do |category| %>
+  <div class="panel panel-success">
+    <% if current_user.admin? %>
+      <%= link_to t"delete", category, method: :delete,
+       data: {confirm: t"sure"},
+       class: "btn btn-danger btn-sm pull-right" %>
+      <%= link_to t"edit", edit_category_path(category),
+       class: "btn btn-warning btn-sm pull-right" %>
+    <% end %>
+    <%= form_for [category, @lesson] do |f| %>
+      <%= f.submit t".start", class: "btn btn-info btn-sm pull-right" %>
+    <% end %>
+    <div class="panel-heading">
+      <%= link_to category.name, category %>
+    </div>
+    <div class="panel-body"><%= category.discription %></div>
+  </div>
+<% end %>
+<%= will_paginate %>

@@ -1,4 +1,5 @@
 en:
+  welcome_to_app: "Welcome to the Sample App!"
   hello: "Hello world"
   layouts:
     application:
@@ -6,7 +7,59 @@ en:
       facebook: "Facebook"
       activities: "Activities"
 
-  e_learning: "E-Learning"
+  sign_up_form: "Sign Up Form"
+  sign_in_form: "Log In Form"
+  e_learning: "E-LEARNING"
   home: "Home"
   sign_up: "Sign Up"
   log_in: "Log In"
+
+  index:
+    login: "Sign in!"
+    signup: "Sign up now!"
+
+  form:
+    name: "Name"
+    email: "Email Address"
+    phonenumber: "Phone Number"
+    message: "Message"
+    password: "Password"
+    confirmation: "Confirmation"
+    discription: "Discription"
+  view:
+    categories:
+      index:
+        title: "Categories"
+        start: "Start"
+      edit:
+        title: "Edit Category"
+
+  error: "Error"
+  error_content: "The form contains"
+  error_invalid: "Invalid email/password combination"
+  error_load: "Can't load !"
+  not_found: " User not found"
+  new_user: "New user?"
+
+  create_account: "Create my account"
+  account: "Already have an account?"
+  let_login: "Please log in."
+  category: "Categories"
+  users: "Users"
+  profile: "Profile"
+  setting: "Settings"
+  log_out: "Log Out"
+  toggle_navigation: "Toggle navigation"
+  main: "MAIN NAVIGATION"
+  search: "Search"
+  e: "E"
+
+  created_success: "Created success !"
+  updated_success: "Updated success !"
+  deleted_success: "Deleted success !"
+  delete: "Delete"
+  edit: "Edit"
+  update: "Update"
+  create: "Create"
+  sure: "You sure?"
+  delete_fails: "Delete fail !"

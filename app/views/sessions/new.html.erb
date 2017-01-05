@@ -1,0 +1,27 @@
+<% provide :title, t("log_in") %>
+<h1><%= t "log_in" %></h1>
+<div class="log">
+  <div class="social w3ls">
+    <li class="f"><a href="#"><%= image_tag "fb.png" %></a></li>
+    <li class="t"><a href="#"><%= image_tag "twt.png" %></a></li>
+    <li class="p"><a href="#"><%= image_tag "pin.png" %></a></li>
+    <li class="i"><a href="#"><%= image_tag "ins.png" %></a></li>
+    <div class="clear"></div>
+  </div>
+
+  <div class="content2 w3agile">
+    <h2><%= t"log_in" %></h2>
+    <form action="#" method="post">
+      <%= form_for :session, url: login_path do |f| %>
+        <%= f.email_field :email, placeholder: t("form.email") %>    
+        <%= f.password_field :password, placeholder: t("form.password") %>
+
+        <div class="button-row">
+          <%= f.submit t("log_in"), class: "sign-in" %>
+          <div class="clear"></div>
+        </div>
+      <% end %>
+      <h3> <%= t("new_user") %> <%= link_to t("index.signup"), signup_path %></h3>
+    </form>
+  </div>
+</div>

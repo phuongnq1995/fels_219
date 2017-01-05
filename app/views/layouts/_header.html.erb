@@ -1,14 +1,38 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="container">
-    <div class="logo">
-      <%= link_to t("e_learning"), root_path %>
-    </div>    
-    <nav>
-      <ul class="nav navbar-nav navbar-right">
+<header class="main-header ">
+  <%= link_to root_path, class: "logo" do %>
+      <span class="logo-mini"><b><%= t("e")%></b></span>
+      <span class="logo-lg"><b><%= t("e_learning")%></b></span>
+  <% end %>
+
+  <nav class="navbar navbar-static-top">
+    <div class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only"><b><%= t("toggle_navigation")%></b></span>
+    </div>
+
+    <div class="nav navbar-nav navbar-right">
+      <% if logged_in? %>
+        <ul class="nav navbar">
+          <li><%= link_to t("category"), categories_path =%></li>
+          <li><%= link_to t("users"), users_path %></li>
+          <li class="dropdown">
+            <b class="dropdown-toggle" data-toggle="dropdown">
+              <%= link_to t("account"), root_path %>
+            </b>
+            <ul class="dropdown-menu">
+              <li><%= link_to t("profile"), current_user %></li>
+              <li><%= link_to t("setting"), edit_user_path(current_user) %></li>
+              <li class="divider"></li>
+              <li>
+                <%= link_to t("log_out"), logout_path, method: "delete" %>
+              </li>
+            </ul>
+            </li>
+          </ul>
+      <% else %>
         <li><%= link_to t("home"), root_path %></li>
-        <li><%= link_to t("log_in"), "#" %></li>
-        <li><%= link_to t("sign_up"), "#" %></li>        
-      </ul>
-    </nav>
-  </div>
+        <li><%= link_to t("log_in"), login_path %></li>
+        <li><%= link_to t("sign_up"), signup_path %></li>
+      <% end %>
+    </div>
+  </nav>
 </header>

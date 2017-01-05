@@ -1,0 +1,11 @@
+<% provide :title, t(".title") %>
+<h1><%= t ".title" %></h1>
+<%= form_for @category do |f| %>
+  <%= render "shared/error_messages", object: f.object %>
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control" %>
+    <%= f.text_area :discription, class: "form-control" %>
+  </div>
+  <%= f.submit t "update", class: "btn btn-primary" %>
+<% end %>

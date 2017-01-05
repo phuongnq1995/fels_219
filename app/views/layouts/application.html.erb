@@ -5,14 +5,24 @@
     <%= full_title yield(:title) %>
   </title>
   <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track": true %>
+  <%= javascript_include_tag :defaults %>
   <%= javascript_include_tag "application", "data-turbolinks-track": true %>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <%= csrf_meta_tags %>
 </head>
-<body>
-  <div class="container">
+<body class="hold-transition skin-blue sidebar-mini">
+  <div class="wrapper">
     <%= render "layouts/header" %>
-    <%= yield %>
-    <%= render "layouts/footer" %>	
+    <%= render "layouts/aside" %> 
+      <div class="content-wrapper">
+        <div class="content">
+          <% flash.each do |message_type, message| %>
+            <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+          <% end %>
+          <%= yield %>
+        </div>
+      </div>
+    <%= render "layouts/footer" %>
   </div>
 </body>
 </html>
