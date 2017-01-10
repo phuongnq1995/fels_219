@@ -30,4 +30,8 @@ module ApplicationHelper
   def time_of_lesson lesson
     lesson.questions.size * 20
   end
+
+  def number_words_of_category category
+    category.words.size - 1
+  end
 end

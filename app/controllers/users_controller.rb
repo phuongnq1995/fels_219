@@ -2,9 +2,10 @@ class UsersController < ApplicationController
   before_action :logged_in_user, except: [:new, :create]
   before_action :load_user, only: [:show, :edit, :update]
   before_action :redirect_incorrect_user, only: [:edit, :update]
+  before_action :delete_lesson_if_dont_edit
 
   def index
-    @users = User.recent.paginate page: params[:page], 
+    @users = User.recent.paginate page: params[:page],
       per_page: Settings.per_page_users
   end
 

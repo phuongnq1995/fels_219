@@ -3,6 +3,7 @@ class LessonsController < ApplicationController
   before_action :load_lesson, only: [:edit, :update, :show]
   before_action :load_category, only: [:edit, :update, :create]
   after_action :delete_answer_false, only: :show
+  skip_before_action :delete_lesson_if_dont_edit, only: :create
 
   def create
     @lesson = @category.lessons.build user: current_user

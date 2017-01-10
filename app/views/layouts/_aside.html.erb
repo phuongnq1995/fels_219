@@ -7,7 +7,7 @@
         </div>
         <div class="pull-left info">
           <p><%= link_to current_user.name, current_user %></p>
-          <a><i class="fa fa-circle text-success"></i><%= t "on_line" %></a>
+          <a><i class="fa fa-circle text-success"></i><%= t "online" %></a>
         </div>
       <% end %>
     </div>
@@ -25,19 +25,17 @@
 
     <ul class="sidebar-menu">
       <li class="header"> <%= t "main" %> </li>
-
+      <li class="treeview">
+        <%= link_to root_path do %>
+          <i class="fa fa-home"></i>
+          <span><%= t "home" %></span>
+        <% end %>
+      </li>
       <li class="treeview">
         <%= link_to categories_path do %>
           <i class="fa fa-files-o"></i>
           <span><%= t "category" %></span>
         <% end %>
-      </li>
-
-      <li>
-        <i class="fa fa-th"></i> <span><%= t "words_list" %></span>
-        <span class="pull-right-container">
-          <small class="label pull-right bg-green"></small>
-        </span>
       </li>
     </ul>
   </section>

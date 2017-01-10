@@ -2,6 +2,7 @@ class CategoriesController < ApplicationController
   before_action :admin_user, except: [:show, :index]
   before_action :logged_in_user
   before_action :load_category, except: [:create, :index]
+  before_action :delete_lesson_if_dont_edit
 
   def index
     @categories = Category.newest.paginate page: params[:page],

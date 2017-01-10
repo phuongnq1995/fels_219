@@ -1,25 +1,28 @@
 <% provide :title, @category.name %>
-<% if current_user.admin? %>
-  <%= form_for @word do |f| %>
-    <%= render "shared/error_messages", object: f.object %>
-    <div class="field">
-      <%= hidden_field_tag :category_id, @category.id %>
-      <%= f.label :content %>
-      <%= f.text_field :content, class: "form-control" %>
-    </div>
-    <%= f.fields_for :answers do |builder| %>
-      <%= render "answer_fields", f: builder %>
+<div class="row center-block form-admin">
+  <% if current_user.admin? %>
+    <%= form_for @word do |f| %>
+      <%= render "shared/error_messages", object: f.object %>
+      <div class="field">
+        <%= hidden_field_tag :category_id, @category.id %>
+        <%= f.label :content %>
+        <%= f.text_field :content, class: "form-control" %>
+      </div>
+      <%= f.fields_for :answers do |builder| %>
+        <%= render "answer_fields", f: builder %>
+      <% end %>
+      <p><%= link_to_add_fields t("add_answer"), f, :answers %></p>
+      <%= f.submit t("create"), class: "btn btn-primary" %>
     <% end %>
-    <p><%= link_to_add_fields t("add_answer"), f, :answers %></p>
-    <%= f.submit t("create"), class: "btn btn-primary" %>
   <% end %>
-<% end %>
+</div>
+<br>
 <div class="panel panel-primary">
-  <div class="panel-heading"><%= @category.name %></div>
+  <div class="panel-heading"><h2><%= @category.name %><h2></div>
   <div class="panel-body"><%= @category.discription %></div>
 </div>
 <% if @category.words.any? %>
-  <h3><%= t "all_word" %>(<%= @category.words.size %>)</h3>
+  <h3><%= t "all_word" %>(<%= number_words_of_category @category %>)</h3>
   <ol class="panel panel-success">
     <%= render @words %>
   </ol>
