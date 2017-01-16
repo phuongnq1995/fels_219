@@ -1,13 +1,14 @@
 class WordsController < ApplicationController
   before_action :logged_in_user
-  before_action :admin_user
+  before_action :admin_user, except: :index
   before_action :load_category, only: [:create, :new]
   before_action :load_word, only: [:edit, :update, :destroy]
+  before_action :load_word_deleted, only: [:restore, :really_destroy]
   before_action :delete_questions_if_exit
 
   def index
-    @categories = Category.all
-    condition = params[:condition].nil? ? "all" : params[:condition]
+    @categories = Category.all.with_deleted
+      condition = params[:condition].nil? ? "all" : params[:condition]
     @words = Word.send("by_#{condition}", current_user.id, category_id)
       .paginate page: params[:page], per_page: Settings.list
   end
@@ -50,6 +51,24 @@ class WordsController < ApplicationController
     redirect_to @word.category
   end
 
+  def really_destroy
+    if @word.really_destroy!
+      flash[:success] = t "deleted_success"
+    else
+      flash[:danger] = t "delete_fail"
+    end
+    redirect_to categories_url
+  end
+
+  def restore
+    if @word.restore
+      flash[:success] = t "restore_success"
+    else
+      flash[:danger] = t "restore_success"
+    end
+    redirect_to @word.category
+  end
+
   private
 
   def word_params
@@ -81,6 +100,14 @@ class WordsController < ApplicationController
   end
 
   def category_id
-    params[:category_id].blank? ? @categories.map(&:id) : params[:category_id]
+    params[:category_id].blank? ? @categories.pluck(:id) : params[:category_id]
+  end
+
+  def load_word_deleted
+    @word = Word.with_deleted.find_by id: params[:id]
+    unless @word
+      flash[:danger] = t "error_load"
+      redirect_to categories_url
+    end
   end
 end

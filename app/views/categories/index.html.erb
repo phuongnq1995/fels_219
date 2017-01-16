@@ -25,23 +25,40 @@
 <% if @categories.any? %>
   <% @categories.each do |category| %>
     <div class="panel panel-success">
-      <% if current_user.admin? %>
-        <%= link_to t("delete"), category, method: :delete,
-         data: {confirm: t("sure")},
-         class: "btn btn-danger btn-sm pull-right" %>
-        <%= link_to t("edit"), edit_category_path(category),
-         class: "btn btn-warning btn-sm pull-right" %>
+      <% if !category.deleted? %>
+        <% if current_user.admin? %>
+          <%= link_to t("delete"), category, method: :delete,
+           data: {confirm: t("sure")},
+           class: "btn btn-danger btn-sm pull-right" %>
+          <%= link_to t("edit"), edit_category_path(category),
+           class: "btn btn-warning btn-sm pull-right" %>
+        <% end %>
+        <%= form_for [category, @lesson] do |f| %>
+          <%= hidden_field_tag :user_id, current_user.id %>
+          <%= f.submit t("start"), class: "btn btn-info btn-sm pull-right" %>
+        <% end %>
+        <div class="panel-heading">
+          <%= link_to category.name, category %>
+          (<%= category.words.by_learned(current_user.id, category.id).size %>/
+          <%= category.words.size %>)
+        </div>
+        <div class="panel-body"><%= category.discription %></div>
+      <% else %>
+        <% if current_user.admin? %>
+          <%= link_to t("delete_all_data"), really_destroy_category_path(
+            category), method: :delete, data:
+            {confirm: t("sure")}, class: "btn btn-danger btn-sm pull-right" %>
+          <%= link_to t("restore"), restore_category_path(category),
+            data: {confirm: t("sure")},
+            class: "btn btn-success btn-sm pull-right" %>
+        <% end %>
+        <div class="panel-heading">
+          <%= category.name %>
+          (<%= category.words.by_learned(current_user.id, category.id).size %>/
+          <%= category.words.size %>)<%= t "(deleted)" if category.deleted? %>
+        </div>
+        <div class="panel-body"><%= category.discription %></div>
       <% end %>
-      <%= form_for [category, @lesson] do |f| %>
-        <%= hidden_field_tag :user_id, current_user.id %>
-        <%= f.submit t("start"), class: "btn btn-info btn-sm pull-right" %>
-      <% end %>
-      <div class="panel-heading">
-        <%= link_to category.name, category %>
-        (<%= category.words.by_learned(current_user.id, category.id).size %>/
-        <%= category.words.size %>)
-      </div>
-      <div class="panel-body"><%= category.discription %></div>
     </div>
   <% end %>
 <%= will_paginate %>

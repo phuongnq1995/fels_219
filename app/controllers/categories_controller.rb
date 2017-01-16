@@ -1,7 +1,9 @@
 class CategoriesController < ApplicationController
   before_action :admin_user, except: [:show, :index]
   before_action :logged_in_user
-  before_action :load_category, except: [:create, :new, :index]
+  before_action :load_category,
+    except: [:new, :index, :create, :really_destroy, :restore]
+  before_action :load_category_deleted, only: [:really_destroy, :restore]
   before_action :delete_questions_if_exit
 
   def new
@@ -15,7 +17,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @words = @category.words.paginate page: params[:page],
+    @words = @category.words.with_deleted.paginate page: params[:page],
       per_page: Settings.per_page_words
   end
 
@@ -52,6 +54,38 @@ class CategoriesController < ApplicationController
     redirect_to categories_url
   end
 
+  def really_destroy
+    if @category.really_destroy!
+      flash[:success] = t "deleted_success"
+    else
+      flash[:danger] = t "delete_fail"
+    end
+    redirect_to categories_url
+  end
+
+  def restore
+    @words = Word.only_deleted.where category_id: @category.id
+    if @words
+      Category.transaction do
+        @category.restore
+        @words.each do |word|
+          if word.restore
+          else
+            raise ActiveRecord::Rollback, t("restore_fail")
+          end
+        end
+          flash[:success] = t "restore_success"
+      end
+    else
+      if @category.restore
+        flash[:success] = t "restore_success"
+      else
+        flash[:danger] = t "restore_fail"
+      end
+    end
+    redirect_to categories_url
+  end
+
   private
 
   def category_params
@@ -67,6 +101,14 @@ class CategoriesController < ApplicationController
 
   def load_category
     @category = Category.find_by id: params[:id]
+    unless @category
+      flash[:danger] = t "error_load"
+      redirect_to categories_url
+    end
+  end
+
+  def load_category_deleted
+    @category = Category.only_deleted.find_by id: params[:id]
     unless @category
       flash[:danger] = t "error_load"
       redirect_to categories_url

@@ -8,8 +8,18 @@ Rails.application.routes.draw do
   resources :users, expect: :destroy
   resources :categories do
     resources :lessons
+    member do
+      get "restore"
+      delete "really_destroy"
+    end
   end
-  resources :words
+
+  resources :words do
+    member do
+      get "restore"
+      delete "really_destroy"
+    end
+  end
 
   resources :users do
     resources :following, only: :index

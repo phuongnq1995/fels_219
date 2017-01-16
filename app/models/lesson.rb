@@ -2,7 +2,7 @@ class Lesson < ActiveRecord::Base
   belongs_to :user
   belongs_to :category
 
-  has_many :questions, dependent: :destroy
+  has_many :questions
   has_many :words, through: :questions
   has_many :answers, through: :questions
 

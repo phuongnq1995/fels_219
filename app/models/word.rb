@@ -1,7 +1,9 @@
 class Word < ActiveRecord::Base
+  acts_as_paranoid
+
   belongs_to :category
 
-  has_many :answers, dependent: :destroy
+  has_many :answers
   has_many :questions
   has_many :lessons, through: :questions
 
@@ -26,7 +28,7 @@ class Word < ActiveRecord::Base
 
   scope :random_index, ->{order "RANDOM()"}
   scope :by_learned,-> (user_id, category_id) do
-    where filter_byword_learned, user_id, category_id
+    with_deleted.where filter_byword_learned, user_id, category_id
   end
 
   scope :by_unlearned, ->(user_id, category_id) do
@@ -34,7 +36,7 @@ class Word < ActiveRecord::Base
   end
 
   scope :by_all, ->(user_id, category_id) do
-    where filter_by_word_all, category_id
+    without_deleted.where filter_by_word_all, category_id
   end
 
   private

@@ -1,6 +1,8 @@
 class Category < ActiveRecord::Base
+  acts_as_paranoid
+
   has_many :words, dependent: :destroy
-  has_many :lessons, dependent: :destroy
+  has_many :lessons
 
   validates :name, presence: true, length: {maximum: Settings.size_content},
    uniqueness: {case_sensitive: false}
@@ -8,6 +10,6 @@ class Category < ActiveRecord::Base
 
   scope :alpha, -> {order name: :asc}
   scope :search, ->(search) do
-    where "name LIKE ?", "%#{search}%"
+    with_deleted.where "name LIKE ?", "%#{search}%"
   end
 end

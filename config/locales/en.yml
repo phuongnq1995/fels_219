@@ -112,3 +112,5 @@ en:
   follow: "Follow"
 
   submit: "submit"
+  restore_success: "Restore success !"
+  restore_fail: "Restore fail !"

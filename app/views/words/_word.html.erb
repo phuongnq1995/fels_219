@@ -1,11 +1,19 @@
 <li id="word-<%= word.id %>">
   <% if current_user.admin? %>
-    <%= link_to t("delete"), word, method: :delete, data: {confirm: t("sure")},
-      class: "btn btn-danger btn-sm pull-right" %>
-    <%= link_to t("edit"), edit_word_path(word),
-      class: "btn btn-warning btn-sm pull-right" %>
+    <% if !word.deleted? %>
+      <%= link_to t("delete"), word, method: :delete,
+        data: {confirm: t("sure")}, class: "btn btn-danger btn-sm pull-right" %>
+      <%= link_to t("edit"), edit_word_path(word),
+        class: "btn btn-warning btn-sm pull-right" %>
+    <% else %>
+      <%= link_to t("delete_all_data"), really_destroy_word_path(word),
+        method: :delete, data: {confirm: t("sure")},
+        class: "btn btn-danger btn-sm pull-right" %>
+      <%= link_to t("restore"), restore_word_path(word), data:
+        {confirm: t("sure")}, class: "btn btn-success btn-sm pull-right" %>
+    <% end %>
+    <div class="panel-heading">
+      <%= word.content %><%= t "(deleted)" if word.deleted? %>
+    </div>
   <% end %>
-  <div class="panel-heading">
-    <%= word.content %>
-  </div>
 </li>
