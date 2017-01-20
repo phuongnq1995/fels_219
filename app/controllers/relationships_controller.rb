@@ -15,7 +15,7 @@ class RelationshipsController < ApplicationController
     @user = relationship.followed
     current_user.unfollow @user
     @active_rls = current_user.active_relationships.find_by followed_id: @user.id
-    respond
+    redirect_to @user
   end
 
   private

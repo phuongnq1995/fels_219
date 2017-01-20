@@ -1,7 +1,6 @@
 source "https://rubygems.org"
 
 gem "rails", "4.2.6"
-gem "sqlite3"
 gem "bcrypt", "3.1.7"
 gem "bootstrap-sass", "3.2.0.0"
 gem "config"
@@ -21,6 +20,7 @@ gem "pry-rails"
 
 group :development, :test do
   gem "byebug"
+  gem "sqlite3", "1.3.9"
 end
 
 group :development do
