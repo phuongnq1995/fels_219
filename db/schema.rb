@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170109083729) do
+ActiveRecord::Schema.define(version: 20170120011356) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "action"
@@ -39,8 +39,10 @@ ActiveRecord::Schema.define(version: 20170109083729) do
     t.text     "discription"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "deleted_at"
   end
 
+  add_index "categories", ["deleted_at"], name: "index_categories_on_deleted_at"
   add_index "categories", ["name"], name: "index_categories_on_name"
 
   create_table "lessons", force: :cascade do |t|
@@ -85,6 +87,7 @@ ActiveRecord::Schema.define(version: 20170109083729) do
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.string   "password_digest"
+    t.string   "avatar"
   end
 
   create_table "words", force: :cascade do |t|
@@ -92,9 +95,11 @@ ActiveRecord::Schema.define(version: 20170109083729) do
     t.integer  "category_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "deleted_at"
   end
 
   add_index "words", ["category_id", "content"], name: "index_words_on_category_id_and_content"
   add_index "words", ["category_id"], name: "index_words_on_category_id"
+  add_index "words", ["deleted_at"], name: "index_words_on_deleted_at"
 
 end

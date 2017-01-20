@@ -1,6 +1,6 @@
 <div class="content2 w3agile">
   <%= form_for @user, html: {multipart: true} do |f| %>
-    <%= render "shared/error_messages" %>
+    <%= render "shared/error_messages", object: f.object %> %>
     <%= f.text_field :name, placeholder: t("form.name") %>
     <%= f.email_field :email, placeholder: t("form.email") %>
     <%= f.password_field :password, placeholder: t("form.password") %>

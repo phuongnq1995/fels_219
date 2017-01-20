@@ -30,4 +30,25 @@ module ApplicationHelper
   def time_of_lesson lesson
     lesson.questions.size * 20
   end
+
+  def activity_of_action activity
+    case activity.action
+    when Settings.start
+      @cat = Category.find_by(id: activity.target_id)
+      return processed unless @cat
+      link_to Category.find_by(id: activity.target_id).name
+    when Settings.learned
+      Word.find_by(id: activity.target_id).content
+    else
+    @user = User.find_by(id: activity.target_id).name
+      return processed unless @user
+      link_to User.find_by(id: activity.target_id).name
+    end
+  end
+
+  private
+  def processed
+    flash[:alert] = t "fails"
+    redirect_to @user
+  end
 end

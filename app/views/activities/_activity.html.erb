@@ -1,0 +1,14 @@
+<div>
+  <ul>
+    <li>
+      <%= image_tag activity.user.avatar.url, size: Settings.size_img %>
+      <span class="user">
+        <%= link_to activity.user.name, activity.user %> <%= t "were" %>
+        <%= activity.action %>
+        <%= activity_of_action activity %>
+        </span>
+      <%= t "about" %><%= time_ago_in_words(activity.created_at) %><%= t "ago" %>
+    </li>
+  </ul>
+</div>
+<br>

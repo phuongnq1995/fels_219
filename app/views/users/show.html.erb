@@ -2,7 +2,7 @@
 <div class="row center col-sm-4">
   <section class="user_info">
     <p>
-      <em><%= image_tag current_user.avatar.url %></em><br>
+      <em><%= image_tag @user.avatar.url, size: Settings.size_profile %></em><br>
       <strong><%= @user.name %></strong><br>
       <code><%= @user.email %></code>
     </p><br>
@@ -13,5 +13,10 @@
   </section>
 </div>
 <div class="col-md-8">
-
+  <% if logged_in? %>
+    <div class="row">
+    <%= render @activity %>
+    <%= will_paginate @activity %>
+    </div>
+  <% end %>
 </div>
