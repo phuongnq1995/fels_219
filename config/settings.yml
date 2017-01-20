@@ -8,13 +8,19 @@ answer_size_default: 4
 min_answers: 2
 max_answers: 6
 true_size_answers: 1
-size_img: 50
 size: 50
 version: 1.0.0
 per_page_words: 10
 list: 25
 limit_number_word: 10
-per_page_users: 20
+per_page_users: 10
+per_page_activity: 15
+start: "start"
+learned: "learned"
+follow: "follow"
+unfollow: "unfollow"
+size_img: "50x50"
+size_profile: "180x190"
 
 option:
   - learned

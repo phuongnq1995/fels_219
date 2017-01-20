@@ -13,8 +13,11 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def show
-  end
+   def show
+    @active_rls = @user.active_relationships.build
+    @activity = @user.activities.paginate page: params[:page],
+      per_page: Settings.per_page_activity
+    end
 
   def create
     @user = User.new user_params
